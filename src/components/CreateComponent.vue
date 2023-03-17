@@ -30,7 +30,7 @@ export default {
             contato: {
                 id: 0,
                 nome: '',
-                idade: 0,
+                idade: 0
             }
         }
     },

@@ -17,17 +17,19 @@
                     <td>{{ contato.nome }}</td>
                     <td>{{ contato.idade }}</td>
                     <td>
-                        <!-- <button id="contato.id" class="btn btn-danger btn-block w-50" data-bs-toggle="modal" data-bs-target="#exampleModal"> -->
+                        <!-- <button id="contato.id" class="btn btn-danger btn-block w-50" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="contato.id"> -->
                         <button
-                            id="contato.id"
                             class="btn btn-danger btn-block w-50"
-                            @click="alterar(contato)"
+                            @click="excluir(contato)"
                         >
                             Excluir
                         </button>
                     </td>
                     <td>
-                        <button class="btn btn-primary btn-block w-50">
+                        <button
+                            class="btn btn-primary btn-block w-50"
+                            @click="alterar(contato)"
+                        >
                             Alterar
                         </button>
                     </td>
@@ -92,9 +94,26 @@ export default {
             });
     },
     methods: {
-        alterar(contato) {
-            alert(JSON.stringify(contato));
+        excluir(contato) {
+            let apiURL = "http://localhost:3000/contatos";
+
+            if (confirm("Deseja excluir o contato?")) {
+                axios
+                    .delete(apiURL + "/" + contato.id)
+                    .then(() => {
+                        this.contatos = this.contatos.filter(
+                            (cont) => contato.id != cont.id
+                        );
+                        alert("Contato excluído");
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
         },
+        alterar(){
+            // let apiURL = "http://localhost:3000/contatos"; 
+        }
     },
 };
 </script>
