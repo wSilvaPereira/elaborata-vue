@@ -1,6 +1,9 @@
 <template>
     <div>
-        <table id="tblContatos" class="table table-striped table-responsive table-hover">
+        <table
+            id="tblContatos"
+            class="table table-striped table-responsive table-hover"
+        >
             <thead>
                 <th>Id</th>
                 <th>Nome</th>
@@ -13,37 +16,91 @@
                     <td>{{ contato.id }}</td>
                     <td>{{ contato.nome }}</td>
                     <td>{{ contato.idade }}</td>
-                    <td><button class="btn btn-danger btn-block w-100">Excluir</button></td>
-                    <td><button class="btn btn-primary btn-block w-100">Alterar</button></td>
+                    <td>
+                        <!-- <button id="contato.id" class="btn btn-danger btn-block w-50" data-bs-toggle="modal" data-bs-target="#exampleModal"> -->
+                        <button
+                            id="contato.id"
+                            class="btn btn-danger btn-block w-50"
+                            @click="alterar(contato)"
+                        >
+                            Excluir
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-block w-50">
+                            Alterar
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-        <!-- <div v-for="contato in contatos" v-bind:key="contato.id">
-            {{ contato.nome }} - {{contato.idade  }}
-        </div> -->
+    </div>
+
+    <!-- Modal -->
+    <div
+        class="modal fade modal-dialog modal-fullscreen"
+        id="exampleModal"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Deseja excluir o registro selecionado?
+                    </h5>
+                </div>
+                <div class="modal-body">O processo não poderá ser desfeito</div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                    >
+                        Não
+                    </button>
+                    <button type="button" class="btn btn-primary">Sim</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-
-import axios from 'axios';
+import axios from "axios";
 
 export default {
     data() {
         return {
-            contatos: []
-        }
+            contatos: [],
+        };
     },
     created() {
         let apiURL = "http://localhost:3000/contatos";
 
-        axios.get(apiURL).then((resp) => {
-            this.contatos = resp.data;
-            // alert(JSON.stringify(resp));
-        }).catch(error => {
-            console.log(error);
-        })
-    }
-}
-
+        axios
+            .get(apiURL)
+            .then((resp) => {
+                this.contatos = resp.data;
+                // alert(JSON.stringify(resp));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    methods: {
+        alterar(contato) {
+            alert(JSON.stringify(contato));
+        },
+    },
+};
 </script>
+
+<style>
+table {
+    text-align: center;
+}
+</style>
